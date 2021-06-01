@@ -10,7 +10,7 @@ if __name__ == "__main__":
     strike_price = 105
     simulator = MonteCarlo(sample_size, time_steps, initial_price, r, sigma, maturity_duration, strike_price)
     # 1. a)
-    print("---------------------")   
+    print("---------------------")
     print("1. a) Compute the price of the following options using Monte Carlo Simulation with the sample size 250 or larger.")
     #simulator.getEuropeanPrices()
     print("--- Asian Call: " + str(simulator.europeanDerivatives["asianCall"].price))
@@ -22,3 +22,5 @@ if __name__ == "__main__":
     
      # 1. b)
     print("---------------------")
+    print("1. a) Price an American Put option using Monte Carlo Simulation.")
+    print("--- American Put: " + str(simulator.americanDerivatives["americanPut"].price))
