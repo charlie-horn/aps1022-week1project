@@ -1,7 +1,7 @@
 from MonteCarlo import MonteCarlo
 
 if __name__ == "__main__":
-    sample_size = 250
+    sample_size = 10000 #250
     time_steps = 10
     initial_price = 100
     r = 0.02
@@ -19,6 +19,5 @@ if __name__ == "__main__":
     print("--- Lookback Put: " + str(simulator.europeanDerivatives["floatingLookbackPut"].price))
     print("--- Floating Lookback Call: " + str(simulator.europeanDerivatives["lookbackCall"].price))
     print("--- Floating Lookback Put: " + str(simulator.europeanDerivatives["lookbackPut"].price))
-    
      # 1. b)
     print("---------------------")
