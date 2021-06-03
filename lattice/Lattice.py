@@ -130,5 +130,5 @@ class Lattice:
         # print("--- American Put Average Stopping Time (Actual Weights): {}".format(average_optimal_time))
         # print("--- American Put Average Stopping Time (Equal Weights): {}".format(average_optimal_time2))
 
-        return option_prices[0][0], average_optimal_time, min_holding, max_execution
+        return option_prices[0][0], average_optimal_time, min_holding, max_execution, stopping_times
 
