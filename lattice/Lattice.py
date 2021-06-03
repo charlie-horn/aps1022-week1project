@@ -45,30 +45,14 @@ class Lattice:
             weights.append(weight)
 
         # pricing
-        # Asian call
-        future_price = sum([weights[i] * max(S_T[i]-self.K, 0) for i in range(2**self.m)])
-        print("--- Asian Call: {}".format(exp(-self.r*self.T/self.m)*future_price))
+        asian_call_price = exp(-self.r*self.T/self.m) * sum([weights[i] * max(S_T[i]-self.K, 0) for i in range(2**self.m)])
+        asian_put_price = exp(-self.r*self.T/self.m) * sum([weights[i] * max(self.K-S_T[i], 0) for i in range(2**self.m)])
+        lookback_call_price = exp(-self.r*self.T/self.m) * sum([weights[i] * max(S_max[i]-self.K, 0) for i in range(2**self.m)])
+        lookback_put_price = exp(-self.r*self.T/self.m) * sum([weights[i] * max(self.K-S_min[i], 0) for i in range(2**self.m)])
+        floating_lookback_call = exp(-self.r*self.T/self.m) * sum([weights[i] * max(S_T[i]-S_min[i], 0) for i in range(2**self.m)])
+        floating_lookback_put = exp(-self.r*self.T/self.m) * sum([weights[i] * max(S_max[i]-S_T[i], 0) for i in range(2**self.m)])
 
-        # Asian put
-        future_price = sum([weights[i] * max(self.K-S_T[i], 0) for i in range(2**self.m)])
-        print("--- Asian Put: {}".format(exp(-self.r*self.T/self.m)*future_price))
-
-        # Lookback call
-        future_price = sum([weights[i] * max(S_max[i]-self.K, 0) for i in range(2**self.m)])
-        print("--- Lookback Call: {}".format(exp(-self.r*self.T/self.m)*future_price))
-
-        # Lookback put
-        future_price = sum([weights[i] * max(self.K-S_min[i], 0) for i in range(2**self.m)])
-        print("--- Lookback Put: {}".format(exp(-self.r*self.T/self.m)*future_price))
-
-        # Floating lookback call
-        future_price = sum([weights[i] * max(S_T[i]-S_min[i], 0) for i in range(2**self.m)])
-        print("--- Floating Lookback Call: {}".format(exp(-self.r*self.T/self.m)*future_price))
-
-        # Floating lookback put
-        future_price = sum([weights[i] * max(S_max[i]-S_T[i], 0) for i in range(2**self.m)])
-        print("--- Floating Lookback Put: {}".format(exp(-self.r*self.T/self.m)*future_price))
-        return
+        return asian_call_price, asian_put_price, lookback_call_price, lookback_put_price, floating_lookback_call, floating_lookback_put
 
     def american_put_pricing(self):
         # step 1: calculate the stock price at each node
@@ -119,7 +103,7 @@ class Lattice:
         del min_holding[0]
         del max_execution[0]
 
-        # calculate the average optimal stopping times
+        # step 3: calculate the average optimal stopping times
         weights = []
         stopping_times = []
 
@@ -142,9 +126,9 @@ class Lattice:
         average_optimal_time2 = sum(stopping_times)/len(stopping_times)
 
 
-        print("--- American Put Price: {}".format(option_prices[0][0]))
-        print("--- American Put Average Stopping Time (Actual Weights): {}".format(average_optimal_time))
-        print("--- American Put Average Stopping Time (Equal Weights): {}".format(average_optimal_time2))
+        # print("--- American Put Price: {}".format(option_prices[0][0]))
+        # print("--- American Put Average Stopping Time (Actual Weights): {}".format(average_optimal_time))
+        # print("--- American Put Average Stopping Time (Equal Weights): {}".format(average_optimal_time2))
 
-        return min_holding, max_execution
+        return option_prices[0][0], average_optimal_time, min_holding, max_execution
 

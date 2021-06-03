@@ -7,8 +7,19 @@ project = Lattice(risk_free_rate=0.02,
                   strike_price=105,
                   maturity = 2/12,
                   num_steps = 8)
-project.euro_option_pricing()
-holding_boundary, execution_boundary = project.american_put_pricing()
+
+asian_call_price, asian_put_price, lookback_call_price, lookback_put_price, floating_lookback_call, floating_lookback_put = project.euro_option_pricing()
+
+print("--- Asian Call: {}".format(asian_call_price))
+print("--- Asian Put: {}".format(asian_put_price))
+print("--- Lookback Call: {}".format(lookback_call_price))
+print("--- Lookback Put: {}".format(lookback_put_price))
+print("--- Floating Lookback Call: {}".format(floating_lookback_call))
+print("--- Floating Lookback Put: {}".format(floating_lookback_put))
+
+price, avg_optimal_time, holding_boundary, execution_boundary = project.american_put_pricing()
+print("--- American Put Price: {}".format(price))
+print("--- American Put Average Stopping Time: {}".format(avg_optimal_time))
 
 # make a plot
 x1 = [i for i in range(1,8)]
