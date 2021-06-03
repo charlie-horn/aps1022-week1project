@@ -1,7 +1,7 @@
 from MonteCarlo import MonteCarlo
 
 if __name__ == "__main__":
-    sample_size = 250
+    sample_size = 10000 #250
     time_steps = 10
     initial_price = 100
     r = 0.02
@@ -13,6 +13,7 @@ if __name__ == "__main__":
     print("---------------------")
     print("1. a) Compute the price of the following options using Monte Carlo Simulation with the sample size 250 or larger.")
     #simulator.getEuropeanPrices()
+
     print("--- Asian Call: " + str(simulator.europeanDerivatives["asianCall"].price), simulator.europeanDerivatives["asianCall"].confidence)
     print("--- Asian Put: " + str(simulator.europeanDerivatives["asianPut"].price), simulator.europeanDerivatives["asianPut"].confidence)
     print("--- Lookback Call: " + str(simulator.europeanDerivatives["floatingLookbackCall"].price), simulator.europeanDerivatives["floatingLookbackCall"].confidence)
