@@ -22,6 +22,7 @@ class Lattice:
 
         # 1.Exhaustive Attack Method to go through all the possible paths
         S_T = []
+        S_avg = []
         S_max = []
         S_min = []
         weights = []
@@ -42,11 +43,12 @@ class Lattice:
             S_T.append(S[-1])
             S_max.append(max(S))
             S_min.append(min(S))
+            S_avg.append(sum(S)/len(S))
             weights.append(weight)
 
         # pricing
-        asian_call_price = exp(-self.r*self.T/self.m) * sum([weights[i] * max(S_T[i]-self.K, 0) for i in range(2**self.m)])
-        asian_put_price = exp(-self.r*self.T/self.m) * sum([weights[i] * max(self.K-S_T[i], 0) for i in range(2**self.m)])
+        asian_call_price = exp(-self.r*self.T/self.m) * sum([weights[i] * max(S_avg[i]-self.K, 0) for i in range(2**self.m)])
+        asian_put_price = exp(-self.r*self.T/self.m) * sum([weights[i] * max(self.K-S_avg[i], 0) for i in range(2**self.m)])
         lookback_call_price = exp(-self.r*self.T/self.m) * sum([weights[i] * max(S_max[i]-self.K, 0) for i in range(2**self.m)])
         lookback_put_price = exp(-self.r*self.T/self.m) * sum([weights[i] * max(self.K-S_min[i], 0) for i in range(2**self.m)])
         floating_lookback_call = exp(-self.r*self.T/self.m) * sum([weights[i] * max(S_T[i]-S_min[i], 0) for i in range(2**self.m)])
