@@ -8,15 +8,19 @@ class AmericanPut(EuropeanDerivative):
         payoff = np.max([0, strike - final])
         return payoff
 
-    def getBlackScholes(self, previous_price, t, d1, d2):
+    def getBlackScholes(self, price, t, d1, d2):
         T = self.maturity_duration
         K = self.strike_price
         r = self.r
-        N1 = norm.pdf(-d1)
-        N2 = norm.pdf(-d2)
-        expected_price = K*np.exp(-r*(T-t))*N2 - previous_price*N1
+        N1 = norm.cdf(-d1)
+        #print("N1:",N1)
+        N2 = norm.cdf(-d2)
+        #print("N2:",N2)
+        expected_price = K*np.exp(-r*(T-t))*N2 - price*N1
         return expected_price
 
     def getVariance(self):
         variance = self.initial_price**2*np.exp(2*self.r*self.maturity_duration)*(np.exp(self.sigma**2*self.maturity_duration-1))
         return variance
+    
+    
