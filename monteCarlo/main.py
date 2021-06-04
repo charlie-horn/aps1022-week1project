@@ -1,7 +1,7 @@
 from MonteCarlo import MonteCarlo
 
 if __name__ == "__main__":
-    sample_size = 250
+    sample_size = 2500
     time_steps = 10
     initial_price = 100
     r = 0.02
@@ -16,10 +16,10 @@ if __name__ == "__main__":
 
     print("--- Asian Call: " + str(simulator.europeanDerivatives["asianCall"].price), simulator.europeanDerivatives["asianCall"].confidence)
     print("--- Asian Put: " + str(simulator.europeanDerivatives["asianPut"].price), simulator.europeanDerivatives["asianPut"].confidence)
-    print("--- Lookback Call: " + str(simulator.europeanDerivatives["floatingLookbackCall"].price), simulator.europeanDerivatives["floatingLookbackCall"].confidence)
-    print("--- Lookback Put: " + str(simulator.europeanDerivatives["floatingLookbackPut"].price), simulator.europeanDerivatives["floatingLookbackPut"].confidence)
-    print("--- Floating Lookback Call: " + str(simulator.europeanDerivatives["lookbackCall"].price), simulator.europeanDerivatives["lookbackCall"].confidence)
-    print("--- Floating Lookback Put: " + str(simulator.europeanDerivatives["lookbackPut"].price), simulator.europeanDerivatives["lookbackPut"].confidence)
+    print("--- Lookback Call: " + str(simulator.europeanDerivatives["lookbackCall"].price), simulator.europeanDerivatives["floatingLookbackCall"].confidence)
+    print("--- Lookback Put: " + str(simulator.europeanDerivatives["lookbackPut"].price), simulator.europeanDerivatives["floatingLookbackPut"].confidence)
+    print("--- Floating Lookback Call: " + str(simulator.europeanDerivatives["floatingLookbackCall"].price), simulator.europeanDerivatives["lookbackCall"].confidence)
+    print("--- Floating Lookback Put: " + str(simulator.europeanDerivatives["floatingLookbackPut"].price), simulator.europeanDerivatives["lookbackPut"].confidence)
     
      # 1. b)
     print("---------------------")

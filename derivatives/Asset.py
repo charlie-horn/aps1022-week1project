@@ -8,7 +8,7 @@ class Asset():
         self.sigma = sigma
         self.price = initial_price
         self.previous_price = initial_price
-        self.num_plot_samples = 10
+        self.num_plot_samples = 20
         self.time_steps = time_steps
         self.prices = np.ones((self.num_plot_samples, self.time_steps+1))*initial_price
         self.maturity_duration = maturity_duration

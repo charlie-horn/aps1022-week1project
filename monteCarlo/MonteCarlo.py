@@ -47,6 +47,7 @@ class MonteCarlo():
                 current_min = float('inf')
                 cumulative_price = 0
                 average_price = 0
+                self.americanAsset.previous_price = self.americanAsset.initial_price
                 found_optimal_stopping_time = False
                 for j in range(self.time_steps):
                     if found_optimal_stopping_time: break
@@ -88,12 +89,12 @@ class MonteCarlo():
         return
 
     def getEuropeanPrices(self):
-        
         for i in range(self.sample_size):
             current_max = float('-inf')
             current_min = float('inf')
             cumulative_price = 0
             average_price = 0
+            self.europeanAsset.previous_price = self.europeanAsset.initial_price
             for j in range(self.time_steps):
                 # Get simulated stock price
                 simulated_price = self.europeanAsset.simulatePrice(i, j)
@@ -107,6 +108,7 @@ class MonteCarlo():
                 payoff = derivative.getPayoff(current_min, current_max, simulated_price, self.strike_price, average_price)
                 derivative.payoffs = np.append(derivative.payoffs, payoff)
                 derivative.cumulative_payoff += payoff
+                
         self.europeanAsset.plotPrices()
 
         for derivative in self.europeanDerivatives.values():

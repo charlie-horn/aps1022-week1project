@@ -4,6 +4,6 @@ import matplotlib.pyplot as plt
 
 class FloatingLookbackPut(EuropeanDerivative):
     def getPayoff(self, min, max, final, strike, average):
-        payoff = np.max([0, max-final])
+        payoff = np.max([0, final-min])
         return payoff
 
