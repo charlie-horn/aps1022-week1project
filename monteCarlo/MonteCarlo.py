@@ -39,6 +39,7 @@ class MonteCarlo():
     def getAmericanPrices(self):
         for derivative in self.americanDerivatives.values():
             cumulative_payoff = 0
+            cumulative_option_price = 0
             tau = np.zeros(self.sample_size)
             tau_vals = np.zeros(self.sample_size)
             for i in range(self.sample_size):
@@ -68,12 +69,14 @@ class MonteCarlo():
                         #print("BS model says:", BS_price)
                         derivative.payoffs = np.append(derivative.payoffs, payoff)
                         cumulative_payoff += payoff
+                        cumulative_option_price += price
                         tau[i] = j#t
                         tau_vals[i] = simulated_price
                         self.americanAsset.lockPrice(i)
                         break
                     if j == self.time_steps - 1:
                         cumulative_payoff += payoff
+                        cumulative_option_price += price
                         derivative.payoffs = np.append(derivative.payoffs, payoff)
                         tau[i] = j#derivative.maturity_duration
                         tau_vals[i] = simulated_price
@@ -82,7 +85,8 @@ class MonteCarlo():
             variance_stopping_time = np.var(tau)
             derivative.stopping_time = mean_stopping_time
             average_payoff = cumulative_payoff/self.sample_size
-            derivative.price = average_payoff*np.exp(-derivative.r*mean_stopping_time)
+            average_option_price = cumulative_option_price/self.sample_size
+            derivative.price = average_option_price #average_payoff*np.exp(-derivative.r*mean_stopping_time)
             #sample_var = derivative.getVariance()
             derivative.confidence =  1.96*np.sqrt(np.var(derivative.payoffs)/self.sample_size)
         self.americanAsset.plotPrices(tau=(tau, tau_vals))
