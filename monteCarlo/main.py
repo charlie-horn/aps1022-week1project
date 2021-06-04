@@ -1,7 +1,7 @@
 from MonteCarlo import MonteCarlo
 
 if __name__ == "__main__":
-    sample_size = 10000 #250
+    sample_size = 250
     time_steps = 10
     initial_price = 100
     r = 0.02
